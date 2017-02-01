@@ -1,0 +1,28 @@
+
+ratio of males to females
+select count(*) from students where gender='m';
+select count(*) from students where gender='f';
+
+select avg(age) from students;
+
+nearest demographic
+select * from (SELECT neighbours.username, neighbours.distance FROM
+(SELECT username, ((age - 25)*(age - 25)/85.0 + 
+(CASE WHEN gender='m' THEN 0 ELSE 1 END)+  (CASE WHEN native_country='Canada' THEN 0 ELSE 1 END)) as distance
+FROM students
+ORDER BY 1
+LIMIT 35) neighbours
+GROUP BY neighbours.username, neighbours.distance) sddd order by 2  ;
+
+
+select t1.username, t1.distance, t1.interest_before from (((((neighbours join (select * from topic_interests where topic_id=45) op1 on neighbours.username=op1.username) t1
+join (select * from topic_interests where topic_id=76) op2 on t1.neighbours.username=op2.username) t2
+join (select * from topic_interests where topic_id=72) op3 on t2.username=op3.username) t3
+join (select * from topic_interests where topic_id=16) op4 on t3.username=op4.username) t4
+join (select * from topic_interests where topic_id=88) op5 on t4.username=op5.username) t5
+
+
+select t1.username, t1.distance, t1.interest_before from ((neighbours join topic_interests op1 on neighbours.username=op1.username where topic_id=45) ) t1
+join topic_interests  op2 on t1.neighbours.username=op2.username where topic_id=76) t2
+
+ 
